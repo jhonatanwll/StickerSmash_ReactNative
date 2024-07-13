@@ -6,12 +6,29 @@ import { useState } from "react";
 
 import ImageViewer from "./components/ImageViewer";
 import Button from "./components/Button";
+import CircleButton from "./components/CircleButton";
+import IconButton from "./components/IconButton";
+import EmojiPicker from "./components/EmojiPicker";
 
 const PlaceholderImage = require("./assets/images/background-image.png");
 
 export default function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showAppOptions, setShowAppOptions] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const onReset = () => {
+    setShowAppOptions(false);
+  };
+  const onAddSticker = () => {
+    setIsModalVisible(true);
+  };
+  const onSaveImageAsync = async () => {
+    // Implemented later
+  };
+  const onModalClose = () => {
+    setIsModalVisible(false);
+  };
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -37,7 +54,17 @@ export default function App() {
         />
       </View>
       {showAppOptions ? (
-        <View/>
+        <View style={styles.optionsContainer}>
+          <View style={styles.optionsRow}>
+            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            <CircleButton onPress={onAddSticker} />
+            <IconButton
+              icon="save-alt"
+              label="Save"
+              onPress={onSaveImageAsync}
+            />
+          </View>
+        </View>
       ) : (
         <View style={styles.footerContainer}>
           <Button
@@ -51,6 +78,9 @@ export default function App() {
           />
         </View>
       )}
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        {/* Uma lista de componentes de emoji ficará aqui */}
+      </EmojiPicker>
       <StatusBar style="auto" />
     </View>
   );
@@ -69,5 +99,13 @@ const styles = StyleSheet.create({
   footerContainer: {
     flex: 1 / 3,
     alignItems: "center",
+  },
+  optionsContainer: {
+    position: "absolute",
+    bottom: 80,
+  },
+  optionsRow: {
+    alignItems: "center",
+    flexDirection: "row",
   },
 });
