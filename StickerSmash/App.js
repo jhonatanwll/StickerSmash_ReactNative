@@ -4,9 +4,6 @@ import * as ImagePicker from "expo-image-picker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 
-// To animate the transition, let's use a spring-based animation. This will make it feel alive because it's based on the real-world physics of a spring. We will use th
-
-
 import { useState } from "react";
 
 import ImageViewer from "./components/ImageViewer";
